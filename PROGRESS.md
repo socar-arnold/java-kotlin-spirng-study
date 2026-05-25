@@ -10,8 +10,8 @@
 
 ## 현재 위치
 - **Stage:** 1 (Kotlin 기초) — Phase 1 진행 중
-- **주차:** 3주차(누적) — Kotlin Introduction (변수·표현식·널 안전성)
-- **상태:** Phase 1-A 진행 — greet(널안전성)·grade(when/범위)·Point(data class)까지 TDD 완료. 다음은 Phase 1-B(OOP)
+- **주차:** 4주차(누적) — Phase 1-B (OOP)
+- **상태:** sealed class + 망라적 when 완료. 다음은 인터페이스/다형성 → 숫자야구 미션
 
 ## 완료 로그
 | 날짜 | Stage·주차 | 주제 | 미션/결과 |
@@ -22,5 +22,7 @@
 
 | 2026-05-22 | Stage 1 / Phase 1-A ② | when 식·범위·data class | ✅ 완료. `grade(score)`(조건형 when·경계값 테스트), `data class Point`(값 동등성 `==`·`copy`). 실험으로 컴파일타임(copy 없음=Unresolved) vs 런타임(equals=주소비교 AssertionError) 체득. 교훈: 커밋 전 `./gradlew test`로 실제 초록 확인(저장 누락으로 BUILD FAILED 경험) |
 
+| 2026-05-25 | Stage 1 / Phase 1-B | OOP & sealed class | ✅ 완료. `Shape`(sealed)+Circle/Rectangle/Triangle, `area()` 망라적 when, 스마트 캐스트. 실험: Triangle 추가 시 exhaustiveness 컴파일 에러로 누락 자동 검출. TDD 규율(가지 추가→테스트 추가), `kotlin.math.PI` 리팩터. src/main/kotlin/Shape.kt, src/test/kotlin/ShapeTest.kt |
+
 ## 다음 세션 예고
-- Stage 1 / Phase 1-B (OOP): 클래스/생성자, `val` 프로퍼티, 인터페이스, sealed class(=TS 유니온 타입), 숫자야구 미션 준비. 계속 TDD.
+- Stage 1 / Phase 1-B 마무리: 인터페이스 vs 추상클래스, 다형성. 이어서 **숫자야구 미션**(Phase 1 종합) 착수. 계속 TDD.
