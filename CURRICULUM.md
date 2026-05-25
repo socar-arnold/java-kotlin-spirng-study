@@ -5774,7 +5774,7 @@ class PaymentService(private val featureFlags: FeatureFlags) {
 - 연계: Phase 3(동시성·스레드·락), Phase 2(JVM 메모리)
 
 ### CS-3. 자료구조·알고리즘 (코딩테스트 기초)
-- [ ] **시간복잡도(Big-O)** — O(1)/O(log n)/O(n)/O(n log n)/O(n²) 감각
+- [x] **시간복잡도(Big-O)** — O(1)/O(log n)/O(n)/O(n log n)/O(n²) 감각 ✅(2026-05-25)
 - [ ] **해시테이블** — 평균 O(1), 충돌 처리, 언제 빠른가/느려지나
 - [ ] **트리/이진탐색트리/힙** — 탐색·정렬·우선순위 큐
 - [ ] **정렬** — 퀵/머지/힙, 안정 정렬 여부

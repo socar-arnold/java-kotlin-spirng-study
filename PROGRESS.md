@@ -25,6 +25,7 @@
 | 2026-05-22 | Stage 1 / Phase 1-A ② | when 식·범위·data class | ✅ 완료. `grade(score)`(조건형 when·경계값 테스트), `data class Point`(값 동등성 `==`·`copy`). 실험으로 컴파일타임(copy 없음=Unresolved) vs 런타임(equals=주소비교 AssertionError) 체득. 교훈: 커밋 전 `./gradlew test`로 실제 초록 확인(저장 누락으로 BUILD FAILED 경험) |
 
 | 2026-05-25 | Stage 1 / Phase 1-B | OOP & sealed class | ✅ 완료. `Shape`(sealed)+Circle/Rectangle/Triangle, `area()` 망라적 when, 스마트 캐스트. 실험: Triangle 추가 시 exhaustiveness 컴파일 에러로 누락 자동 검출. TDD 규율(가지 추가→테스트 추가), `kotlin.math.PI` 리팩터. src/main/kotlin/Shape.kt, src/test/kotlin/ShapeTest.kt |
+| 2026-05-25 | Phase CS / CS-3 | 시간복잡도(Big-O) 맛보기 | ✅ 완료. O(1)~O(n²) 감각, 중첩루프=O(n²), List(O(n)) vs HashSet(O(1)) 조회, Redis=인메모리 해시 O(1) 연결. 면접 자가점검 2문항 정답 |
 
 ## 다음 세션 예고
 - Stage 1 / Phase 1-B 마무리: 인터페이스 vs 추상클래스, 다형성. 이어서 **숫자야구 미션**(Phase 1 종합) 착수. 계속 TDD.
