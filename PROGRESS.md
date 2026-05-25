@@ -11,7 +11,7 @@
 ## 현재 위치
 - **Stage:** 1 (Kotlin 기초) — Phase 1 진행 중
 - **주차:** 3주차(누적) — Kotlin Introduction (변수·표현식·널 안전성)
-- **상태:** Phase 1-A 첫 TDD 완료. 이어서 `when`/범위/스마트캐스트/`data class` 예정
+- **상태:** Phase 1-A 진행 — greet(널안전성)·grade(when/범위)·Point(data class)까지 TDD 완료. 다음은 Phase 1-B(OOP)
 
 ## 완료 로그
 | 날짜 | Stage·주차 | 주제 | 미션/결과 |
@@ -20,5 +20,7 @@
 | 2026-05-22 | Stage 0 / 2주차 | Java OOP·관용구 + "Kotlin은 왜 바꿨나" | ✅ 완료(=Stage 0 졸업). 명목적 vs 구조적 타이핑, Java 관용구 3종(getter/setter·체크예외·제네릭소거)과 Kotlin 개선 이해. 교정: `throws`는 인자 아님(체크예외 처리 강제), Kotlin `override`는 필수 키워드. 20줄 Java→6줄 Kotlin 재작성 확인 |
 | 2026-05-22 | Stage 1 / Phase 1-A | Introduction to Kotlin (첫 TDD) | ✅ 완료. `greet(name: String?)` 함수를 RED→GREEN→REFACTOR로 완주. 배운 것: val/var, 널 안전성(String vs String?), `?:`/`?.`/문자열템플릿, **최상위 함수**(클래스 불필요), **단일 식 함수**(`= 식`), 섀도잉. 교훈: Java 습관으로 class로 감쌌다가 unresolved → 최상위 함수로 교정. src/main/kotlin/Intro.kt, src/test/kotlin/IntroTest.kt |
 
+| 2026-05-22 | Stage 1 / Phase 1-A ② | when 식·범위·data class | ✅ 완료. `grade(score)`(조건형 when·경계값 테스트), `data class Point`(값 동등성 `==`·`copy`). 실험으로 컴파일타임(copy 없음=Unresolved) vs 런타임(equals=주소비교 AssertionError) 체득. 교훈: 커밋 전 `./gradlew test`로 실제 초록 확인(저장 누락으로 BUILD FAILED 경험) |
+
 ## 다음 세션 예고
-- Stage 1 / Phase 1-A 이어서: `when` 식으로 분기(예: 점수→등급), 범위(`in 1..10`), 스마트 캐스트, `data class` 맛보기. 계속 TDD로 직접 타이핑.
+- Stage 1 / Phase 1-B (OOP): 클래스/생성자, `val` 프로퍼티, 인터페이스, sealed class(=TS 유니온 타입), 숫자야구 미션 준비. 계속 TDD.
