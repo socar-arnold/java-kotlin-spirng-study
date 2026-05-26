@@ -9,10 +9,10 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 1 (Kotlin 기초) — **Phase 1-B (OOP) 완료**
-- **진행:** 누적 **8세션 완료** (Stage 0: 2 / Stage 1: 5 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
-- **Stage 1 잔여:** ~9세션 (1-C 제네릭 / 1-D 컬렉션 / 1-E FP / 1-F 예외 + 미션 3개)
-- **다음:** Phase 1-C 제네릭 → 1-D 컬렉션 → 숫자야구 미션
+- **Stage:** 1 (Kotlin 기초) — **Phase 1-C (Generics) 완료**
+- **진행:** 누적 **9세션 완료** (Stage 0: 2 / Stage 1: 6 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
+- **Stage 1 잔여:** ~8세션 (1-D 컬렉션 / 1-E FP / 1-F 예외 + 미션 3개)
+- **다음:** Phase 1-D 컬렉션 (CS-3 해시/Big-O 연계) → 숫자야구 미션
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -27,6 +27,7 @@
 | 2026-05-25 | Stage 1 / Phase 1-B | OOP & sealed class | ✅ 완료. `Shape`(sealed)+Circle/Rectangle/Triangle, `area()` 망라적 when, 스마트 캐스트. 실험: Triangle 추가 시 exhaustiveness 컴파일 에러로 누락 자동 검출. TDD 규율(가지 추가→테스트 추가), `kotlin.math.PI` 리팩터. src/main/kotlin/Shape.kt, src/test/kotlin/ShapeTest.kt |
 | 2026-05-25 | Phase CS / CS-3 | 시간복잡도(Big-O) 맛보기 | ✅ 완료. O(1)~O(n²) 감각, 중첩루프=O(n²), List(O(n)) vs HashSet(O(1)) 조회, Redis=인메모리 해시 O(1) 연결. 면접 자가점검 2문항 정답 |
 | 2026-05-26 | Stage 1 / Phase 1-B ② | 인터페이스·다형성 | ✅ 완료(=Phase 1-B 종료). `interface Shape2`+Circle2/Rectangle2/Triangle2, `totalArea`(다형성, when 없음). 핵심: 표(타입×동작)로 when vs 다형성 이해 — 묶은 방향으로 늘리면 쉬움(표현 문제). 실험: Triangle2 추가해도 totalArea 무수정(↔어제 sealed는 when 수정 필요). 노트에 표/동물원 비유 보존. src/main/kotlin/Polymorphism.kt, src/test/kotlin/PolymorphismTest.kt |
+| 2026-05-26 | Stage 1 / Phase 1-C | Generics & 변성 | ✅ 완료. `fun <T> first`, `class Box<T>`(타입 추론), 타입 소거(=TS와 동일), 변성 `ReadBox<out T>`(공변). 실험: out 제거 시 type mismatch 컴파일 에러로 공변 ON/OFF 확인(PECS). 디버깅 교훈: 빈 Generics.kt가 원인이었음 — 에러가 가리키는 심볼을 먼저 보라. src/main/kotlin/{Generics,Variance}.kt |
 
 ## 다음 세션 예고
-- Stage 1 / Phase 1-C (Generics): `<T>` 제네릭 함수/클래스, 변성(in/out) 맛보기 — TS 제네릭과 매핑. 이어서 1-D 컬렉션(CS-3 해시/Big-O 연계). 계속 TDD.
+- Stage 1 / Phase 1-D (Collections): List/Set/Map, 불변(immutable) 우선, `map/filter/find` 맛보기. CS-3(해시=O(1)) 연계. 이어서 **숫자야구 미션** 착수. 계속 TDD.
