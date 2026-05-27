@@ -64,4 +64,34 @@ class BaseballTest {
             validateGuess(listOf(0, 5, 9))
         }
     }
+
+    @Test
+    fun `생성된 정답은 1에서 9의 중복 없는 3자리다`() {
+        repeat(100) {
+            val answer = generateAnswer()
+            answer.size shouldBe 3
+            answer.all {it in 1..9} shouldBe true
+            hasDuplicate(answer) shouldBe false
+        }
+    }
+
+    @Test
+    fun `정답을 맞히면 3스트라이크 결과`() {
+        val game = Game(listOf(1, 2, 3))
+        game.play(listOf(1, 2, 3)) shouldBe Result(strikes = 3, balls = 0)
+    }
+
+    @Test
+    fun `잘못된 추측은 검증에서 막힌다`() {
+        val game = Game(listOf(1, 2, 3))
+        shouldThrow<IllegalArgumentException> {
+            game.play(listOf(1, 1, 2))      // 중복 → 예외
+        }
+    }
+
+    @Test
+    fun `3스트라이크면 승리`() {
+        isWin(Result(strikes = 3, balls = 0)) shouldBe true
+        isWin(Result(strikes = 1, balls = 2)) shouldBe false
+    }
 }

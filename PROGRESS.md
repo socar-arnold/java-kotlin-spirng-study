@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 1 (Kotlin 기초) — **Phase 1 개념(A~F) 전부 완료** 🎉
-- **진행:** 누적 **12세션 완료** (Stage 0: 2 / Stage 1: 9 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
-- **Stage 1 잔여:** ~5세션 (미션 3개: 숫자야구/자동차경주/좌표계산기)
-- **다음:** 🎯 **숫자야구 미션** (Phase 1 종합) — 랜덤 정답 생성 + 게임 루프
-- **메모:** 숫자야구 재료 전부 완성 — judge/countStrikes/countBalls(1-D), hasDuplicate(1-E), validateGuess(1-F). src/main/kotlin/Baseball.kt
+- **Stage:** 1 (Kotlin 기초) — Phase 1 개념(A~F) 완료 + **미션① 숫자야구 완성** ⚾🎉
+- **진행:** 누적 **13세션 완료** (Stage 0: 2 / Stage 1: 10 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
+- **Stage 1 잔여:** ~3세션 (미션 2개: 자동차경주, 좌표계산기)
+- **다음:** 미션② 자동차경주 (랜덤 전진·우승자 판정) 또는 좌표계산기
+- **메모:** 숫자야구 완성·플레이 확인. Game(정답 은닉)+main(I/O). src/main/kotlin/Baseball.kt
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -32,6 +32,7 @@
 | 2026-05-26 | Stage 1 / Phase 1-D | Collections + 야구 판정 | ✅ 완료. 불변 우선(listOf), 함수형 `count/filter/in`, `x in list`==contains. **숫자야구 두뇌 완성**: countStrikes·countBalls·judge(data class Result). 리뷰: 중복 `||` 제거, `it ->` 생략. src/main/kotlin/Baseball.kt, src/test/kotlin/BaseballTest.kt |
 | 2026-05-26 | Stage 1 / Phase 1-E | 함수형(FP) | ✅ 완료. 고차함수·체이닝(filter→map→count), `fold(초기값){acc,x->}`=reduce 안전판, `sumOf`. `sumOfSquares`(fold), `hasDuplicate`(toSet 크기 비교, 야구 정답 검증용). src/main/kotlin/Fp.kt, src/test/kotlin/FpTest.kt. (Fp.kt를 test→main으로 위치 교정) |
 | 2026-05-27 | Stage 1 / Phase 1-F | 예외 & 입력 검증 | ✅ 완료(=Phase 1 개념 A~F 종료). `require`/`check`/`error`(fail-fast), try-catch는 식, 체크예외 없음. `validateGuess`(3자리·1~9·중복 — all/hasDuplicate 재사용). 책임 분리(검증 입구 vs 판정). src/main/kotlin/Baseball.kt |
+| 2026-05-27 | Stage 1 / 미션① | 숫자야구 ⚾ | ✅ **완성·플레이 성공**. generateAnswer(`(1..9).shuffled().take(3)`), Game(private val answer 은닉)+play, isWin, main(I/O 루프). 배움: 랜덤은 "규칙 충족"으로 테스트(repeat 100), I/O와 로직 분리, private≠val. src/main/kotlin/Baseball.kt, src/test/kotlin/BaseballTest.kt |
 
 ## 다음 세션 예고
-- 🎯 **숫자야구 미션** (Phase 1 종합): 랜덤 정답 생성(1~9, 중복 없는 3자리) → 게임 루프(3스트라이크까지 반복) → 입력 처리. 이미 만든 judge/validateGuess/hasDuplicate 조립. 계속 TDD.
+- Stage 1 / 미션② **자동차경주**: 자동차 여러 대가 랜덤 값(≥4면 전진)으로 N라운드 전진, 최종 우승자(들) 판정. 입력(대수·라운드) 검증. 계속 TDD(전진 규칙·우승자 로직을 순수 함수로). 그 후 미션③ 좌표계산기.
