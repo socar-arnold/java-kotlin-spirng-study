@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 1 (Kotlin 기초) — **Phase 1-D (Collections) 완료**
-- **진행:** 누적 **10세션 완료** (Stage 0: 2 / Stage 1: 7 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
-- **Stage 1 잔여:** ~7세션 (1-E FP / 1-F 예외 + 미션 3개)
-- **다음:** Phase 1-E 함수형(람다·고차함수·fold) → 1-F 예외 → 숫자야구 미션 완성
-- **메모:** 숫자야구 판정 로직(countStrikes/countBalls/judge+Result)은 Phase 1-D에서 이미 완성. src/main/kotlin/Baseball.kt
+- **Stage:** 1 (Kotlin 기초) — **Phase 1-E (FP) 완료**
+- **진행:** 누적 **11세션 완료** (Stage 0: 2 / Stage 1: 8 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
+- **Stage 1 잔여:** ~6세션 (1-F 예외 + 미션 3개)
+- **다음:** Phase 1-F 예외(require/check 입력검증) → 숫자야구 미션 완성
+- **메모:** 숫자야구 재료 완성도 — 판정(countStrikes/countBalls/judge), 중복검사(hasDuplicate) 준비됨. src/main/kotlin/Baseball.kt, Fp.kt
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -30,6 +30,7 @@
 | 2026-05-26 | Stage 1 / Phase 1-B ② | 인터페이스·다형성 | ✅ 완료(=Phase 1-B 종료). `interface Shape2`+Circle2/Rectangle2/Triangle2, `totalArea`(다형성, when 없음). 핵심: 표(타입×동작)로 when vs 다형성 이해 — 묶은 방향으로 늘리면 쉬움(표현 문제). 실험: Triangle2 추가해도 totalArea 무수정(↔어제 sealed는 when 수정 필요). 노트에 표/동물원 비유 보존. src/main/kotlin/Polymorphism.kt, src/test/kotlin/PolymorphismTest.kt |
 | 2026-05-26 | Stage 1 / Phase 1-C | Generics & 변성 | ✅ 완료. `fun <T> first`, `class Box<T>`(타입 추론), 타입 소거(=TS와 동일), 변성 `ReadBox<out T>`(공변). 실험: out 제거 시 type mismatch 컴파일 에러로 공변 ON/OFF 확인(PECS). 디버깅 교훈: 빈 Generics.kt가 원인이었음 — 에러가 가리키는 심볼을 먼저 보라. src/main/kotlin/{Generics,Variance}.kt |
 | 2026-05-26 | Stage 1 / Phase 1-D | Collections + 야구 판정 | ✅ 완료. 불변 우선(listOf), 함수형 `count/filter/in`, `x in list`==contains. **숫자야구 두뇌 완성**: countStrikes·countBalls·judge(data class Result). 리뷰: 중복 `||` 제거, `it ->` 생략. src/main/kotlin/Baseball.kt, src/test/kotlin/BaseballTest.kt |
+| 2026-05-26 | Stage 1 / Phase 1-E | 함수형(FP) | ✅ 완료. 고차함수·체이닝(filter→map→count), `fold(초기값){acc,x->}`=reduce 안전판, `sumOf`. `sumOfSquares`(fold), `hasDuplicate`(toSet 크기 비교, 야구 정답 검증용). src/main/kotlin/Fp.kt, src/test/kotlin/FpTest.kt |
 
 ## 다음 세션 예고
-- Stage 1 / Phase 1-E (FP): 람다·고차함수, `map/fold/reduce/groupBy` 심화. 이어서 1-F(예외: require 입력검증) → **숫자야구 미션 완성**(랜덤 정답 생성 + 입력 루프 + 게임 진행). 계속 TDD.
+- Stage 1 / Phase 1-F (예외): `require`/`check`/`error`로 입력 검증, try-catch는 식. → 그 후 **숫자야구 미션 완성**(랜덤 정답 생성 + 입력 검증 + 게임 루프). 계속 TDD.
