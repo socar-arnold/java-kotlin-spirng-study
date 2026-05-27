@@ -1,5 +1,7 @@
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldNotThrow
 
 class BaseballTest {
     @Test
@@ -33,5 +35,33 @@ class BaseballTest {
         judge(listOf(1, 2, 3), listOf(1, 5, 3)) shouldBe Result(strikes = 2, balls = 0)
         judge(listOf(1, 2, 3), listOf(3, 1, 2)) shouldBe Result(strikes = 0, balls = 3)
         judge(listOf(1, 2, 3), listOf(4, 5, 6)) shouldBe Result(strikes = 0, balls = 0)
+    }
+
+    @Test
+    fun `정상 입력은 통과한다`() {
+        shouldNotThrow<IllegalArgumentException> {
+            validateGuess(listOf(1, 2, 3))
+        }
+    }
+
+    @Test
+    fun `3자리가 아니면 예외`() {
+        shouldThrow<IllegalArgumentException> {
+            validateGuess(listOf(1, 2))
+        }
+    }
+
+    @Test
+    fun `중복이 있으면 예외`() {
+        shouldThrow<IllegalArgumentException> {
+            validateGuess(listOf(1, 1, 2))
+        }
+    }
+
+    @Test
+    fun `1에서 9 범위를 벗어나면 예외`() {
+        shouldThrow<IllegalArgumentException> {
+            validateGuess(listOf(0, 5, 9))
+        }
     }
 }
