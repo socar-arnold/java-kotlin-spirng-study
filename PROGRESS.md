@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 1 (Kotlin 기초) — Phase 1 개념(A~F) 완료 + **미션① 숫자야구 완성** ⚾🎉
-- **진행:** 누적 **13세션 완료** (Stage 0: 2 / Stage 1: 10 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
-- **Stage 1 잔여:** ~3세션 (미션 2개: 자동차경주, 좌표계산기)
-- **다음:** 미션② 자동차경주 (랜덤 전진·우승자 판정) 또는 좌표계산기
-- **메모:** 숫자야구 완성·플레이 확인. Game(정답 은닉)+main(I/O). src/main/kotlin/Baseball.kt
+- **Stage:** 1 (Kotlin 기초) — Phase 1 개념 완료 + **미션①②(숫자야구·자동차경주) 완성** ⚾🏎️🎉
+- **진행:** 누적 **14세션 완료** (Stage 0: 2 / Stage 1: 11 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
+- **Stage 1 잔여:** ~1세션 (미션③ 좌표계산기) → 거의 끝!
+- **다음:** 미션③ 좌표계산기 (두 점 거리 등) → Stage 1 종료
+- **메모:** 자동차경주 완성·플레이 확인(공동우승 정상). Car(copy 불변)/winners/playRound(zip)/main. src/main/kotlin/CarRacing.kt
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -33,6 +33,7 @@
 | 2026-05-26 | Stage 1 / Phase 1-E | 함수형(FP) | ✅ 완료. 고차함수·체이닝(filter→map→count), `fold(초기값){acc,x->}`=reduce 안전판, `sumOf`. `sumOfSquares`(fold), `hasDuplicate`(toSet 크기 비교, 야구 정답 검증용). src/main/kotlin/Fp.kt, src/test/kotlin/FpTest.kt. (Fp.kt를 test→main으로 위치 교정) |
 | 2026-05-27 | Stage 1 / Phase 1-F | 예외 & 입력 검증 | ✅ 완료(=Phase 1 개념 A~F 종료). `require`/`check`/`error`(fail-fast), try-catch는 식, 체크예외 없음. `validateGuess`(3자리·1~9·중복 — all/hasDuplicate 재사용). 책임 분리(검증 입구 vs 판정). src/main/kotlin/Baseball.kt |
 | 2026-05-27 | Stage 1 / 미션① | 숫자야구 ⚾ | ✅ **완성·플레이 성공**. generateAnswer(`(1..9).shuffled().take(3)`), Game(private val answer 은닉)+play, isWin, main(I/O 루프). 배움: 랜덤은 "규칙 충족"으로 테스트(repeat 100), I/O와 로직 분리, private≠val. src/main/kotlin/Baseball.kt, src/test/kotlin/BaseballTest.kt |
+| 2026-05-27 | Stage 1 / 미션② | 자동차경주 🏎️ | ✅ **완성·플레이 성공(공동우승 정상)**. Car(copy 불변 전진), winners(maxOf→filter→map), playRound(zip), main((0..9).random()/repeat). 함정 교훈: position+1(value 아님), maxOf는 값 하나. 랜덤 주입=결정적 테스트. src/main/kotlin/CarRacing.kt, src/test/kotlin/CarRacingTest.kt |
 
 ## 다음 세션 예고
-- Stage 1 / 미션② **자동차경주**: 자동차 여러 대가 랜덤 값(≥4면 전진)으로 N라운드 전진, 최종 우승자(들) 판정. 입력(대수·라운드) 검증. 계속 TDD(전진 규칙·우승자 로직을 순수 함수로). 그 후 미션③ 좌표계산기.
+- Stage 1 / 미션③ **좌표계산기** (마지막): 두 점 사이 거리(피타고라스) 등. 그 후 **Stage 1 종료** → Stage 2(빌드·JVM·동시성)로. 계속 TDD.
