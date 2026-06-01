@@ -9,11 +9,10 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 1 (Kotlin 기초) — Phase 1 개념 완료 + **미션①②(숫자야구·자동차경주) 완성** ⚾🏎️🎉
-- **진행:** 누적 **14세션 완료** (Stage 0: 2 / Stage 1: 11 / Phase CS: 1). 세션 = 약 45~90분 학습 단위 ([LEARNING_TRACK.md](LEARNING_TRACK.md) 보정 기준)
-- **Stage 1 잔여:** ~1세션 (미션③ 좌표계산기) → 거의 끝!
-- **다음:** 미션③ 좌표계산기 (두 점 거리 등) → Stage 1 종료
-- **메모:** 자동차경주 완성·플레이 확인(공동우승 정상). Car(copy 불변)/winners/playRound(zip)/main. src/main/kotlin/CarRacing.kt
+- **Stage:** 🏆 **Stage 1 (Kotlin 기초) 완주!** ⚾🏎️📐
+- **진행:** 누적 **15세션 완료** (Stage 0: 2 / Stage 1: 12 / Phase CS: 1)
+- **다음:** **Stage 2 (빌드·JVM·동시성)** — Phase 0 빌드 → Phase 2 JVM → Phase 3 동시성/코루틴 + 미션(RSS리더, 코루틴 레이싱). 약 12세션 예상
+- **메모:** 좌표계산기 완성·플레이 확인. 자산: Intro/Shape/Polymorphism/Generics/Variance/Fp/Baseball/CarRacing/Coordinate (전부 TDD+main)
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -34,6 +33,8 @@
 | 2026-05-27 | Stage 1 / Phase 1-F | 예외 & 입력 검증 | ✅ 완료(=Phase 1 개념 A~F 종료). `require`/`check`/`error`(fail-fast), try-catch는 식, 체크예외 없음. `validateGuess`(3자리·1~9·중복 — all/hasDuplicate 재사용). 책임 분리(검증 입구 vs 판정). src/main/kotlin/Baseball.kt |
 | 2026-05-27 | Stage 1 / 미션① | 숫자야구 ⚾ | ✅ **완성·플레이 성공**. generateAnswer(`(1..9).shuffled().take(3)`), Game(private val answer 은닉)+play, isWin, main(I/O 루프). 배움: 랜덤은 "규칙 충족"으로 테스트(repeat 100), I/O와 로직 분리, private≠val. src/main/kotlin/Baseball.kt, src/test/kotlin/BaseballTest.kt |
 | 2026-05-27 | Stage 1 / 미션② | 자동차경주 🏎️ | ✅ **완성·플레이 성공(공동우승 정상)**. Car(copy 불변 전진), winners(maxOf→filter→map), playRound(zip), main((0..9).random()/repeat). 함정 교훈: position+1(value 아님), maxOf는 값 하나. 랜덤 주입=결정적 테스트. src/main/kotlin/CarRacing.kt, src/test/kotlin/CarRacingTest.kt |
+| 2026-05-27 | Stage 1 / 미션③ | 좌표계산기 📐 | ✅ **완성·플레이 성공**(3-4-5 → 5.0). Coordinate(data class), distance(피타고라스, kotlin.math.sqrt), 구조 분해(`val (x,y) = list`). Point vs Coordinate 네이밍 충돌 회피. src/main/kotlin/Coordinate.kt |
+| 2026-05-27 | **🏆 Stage 1 클로징** | 회고 | Phase 1 A~F 개념 + 미션 3개 + CS-3 + 디버깅/도구 교훈. 시니어 사고 5가지(테스트가능한설계/불변/책임분리/표현문제/컴파일타임vs런타임). 종합 노트: learning-notes/2026-05-27-stage1-COMPLETE.md |
 
 ## 다음 세션 예고
-- Stage 1 / 미션③ **좌표계산기** (마지막): 두 점 사이 거리(피타고라스) 등. 그 후 **Stage 1 종료** → Stage 2(빌드·JVM·동시성)로. 계속 TDD.
+- **Stage 2 (빌드·JVM·동시성)** 시작: Phase 0(Gradle 본격) → Phase 2(JVM 내부·GC·Reflection) → Phase 3(스레드·락·**코루틴** = TS Promise/async의 그 자리, JVM에선 핵심). 페어링 CS: 네트워크/OS(스레드·데드락). 미션: RSS리더, 코루틴 레이싱. JS 이벤트 루프 ≠ JVM 스레드 모델이 진짜 시험대.
