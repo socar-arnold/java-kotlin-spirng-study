@@ -9,10 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 🏆 **Stage 1 (Kotlin 기초) 완주!** ⚾🏎️📐
-- **진행:** 누적 **15세션 완료** (Stage 0: 2 / Stage 1: 12 / Phase CS: 1)
-- **다음:** **Stage 2 (빌드·JVM·동시성)** — Phase 0 빌드 → Phase 2 JVM → Phase 3 동시성/코루틴 + 미션(RSS리더, 코루틴 레이싱). 약 12세션 예상
-- **메모:** 좌표계산기 완성·플레이 확인. 자산: Intro/Shape/Polymorphism/Generics/Variance/Fp/Baseball/CarRacing/Coordinate (전부 TDD+main)
+- **Stage:** 2 (빌드·JVM·동시성) — **Phase 0 + Phase 2 완료** ⚡
+- **진행:** 누적 **17세션 완료** (Stage 0: 2 / Stage 1: 12 / Stage 2: 2 / Phase CS: 1)
+- **Stage 2 잔여:** ~10세션 (Phase 3 동시성·코루틴 + 미션 RSS리더/코루틴레이싱)
+- **다음:** Phase 3 (동시성/코루틴) — JS 이벤트 루프 ≠ JVM 스레드. Stage 2의 백미.
+- **메모:** GC 로그 실관찰(Minor 1~2ms vs Full 12.9ms STW), Reflection 동작. kotlin-reflect 의존성 추가.
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -35,6 +36,7 @@
 | 2026-05-27 | Stage 1 / 미션② | 자동차경주 🏎️ | ✅ **완성·플레이 성공(공동우승 정상)**. Car(copy 불변 전진), winners(maxOf→filter→map), playRound(zip), main((0..9).random()/repeat). 함정 교훈: position+1(value 아님), maxOf는 값 하나. 랜덤 주입=결정적 테스트. src/main/kotlin/CarRacing.kt, src/test/kotlin/CarRacingTest.kt |
 | 2026-05-27 | Stage 1 / 미션③ | 좌표계산기 📐 | ✅ **완성·플레이 성공**(3-4-5 → 5.0). Coordinate(data class), distance(피타고라스, kotlin.math.sqrt), 구조 분해(`val (x,y) = list`). Point vs Coordinate 네이밍 충돌 회피. src/main/kotlin/Coordinate.kt |
 | 2026-05-27 | **🏆 Stage 1 클로징** | 회고 | Phase 1 A~F 개념 + 미션 3개 + CS-3 + 디버깅/도구 교훈. 시니어 사고 5가지(테스트가능한설계/불변/책임분리/표현문제/컴파일타임vs런타임). 종합 노트: learning-notes/2026-05-27-stage1-COMPLETE.md |
+| 2026-05-27 | Stage 2 / Phase 0+2 | Gradle & JVM 내부 | ✅ 완료. Phase 0 Gradle(tasks/dependencies/build, mavenCentral=npm registry, Wrapper). Phase 2 메모리(Stack/Heap/Metaspace)·GC(세대 가설 G1 기본, 실로그 Young 1~2ms vs Full 12.9ms STW)·JIT(워밍업, 티어드 C1/C2)·Reflection(`d::class.memberProperties`, Spring/Jackson/JPA의 마법 비결). 의존성 추가: kotlin-reflect. src/main/kotlin/Reflection.kt |
 
 ## 다음 세션 예고
-- **Stage 2 (빌드·JVM·동시성)** 시작: Phase 0(Gradle 본격) → Phase 2(JVM 내부·GC·Reflection) → Phase 3(스레드·락·**코루틴** = TS Promise/async의 그 자리, JVM에선 핵심). 페어링 CS: 네트워크/OS(스레드·데드락). 미션: RSS리더, 코루틴 레이싱. JS 이벤트 루프 ≠ JVM 스레드 모델이 진짜 시험대.
+- Phase 3 (동시성·코루틴): 스레드/락/JMM/`@Volatile`/동시성 컬렉션 → 코루틴(TS Promise/async 매핑 자리). JS 이벤트 루프 ≠ JVM 스레드 모델 — Stage 2의 백미. 페어링 CS-2(프로세스/스레드/데드락).
