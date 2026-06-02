@@ -18,7 +18,10 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-    jvmArgs("-Xlog:gc", "-Xmx64m") // GC 로깅 + 힙 64MB로 좁히기
+    testLogging {
+        showStandardStreams = true
+        events("passed", "failed", "skipped")
+    }
 }
 
 kotlin {
