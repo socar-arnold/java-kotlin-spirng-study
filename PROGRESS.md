@@ -42,3 +42,6 @@
 
 ## 다음 세션 예고
 - Phase 3-E ②: **Dispatchers**(Main/IO/Default, withContext), **구조적 동시성 심화**(Job·취소·에러 전파), `launch` vs `async` 사용처. 그 다음 미션 **RSS리더**(I/O 병렬)·**코루틴 레이싱** → Stage 2 종료.
+
+## TODO (Stage 2 졸업 시 처리)
+- [ ] LeetCode 운영 가이드를 LEARNING_TRACK.md의 CS 병렬 트랙 섹션에 추가. 핵심: LeetCode = CS-3의 실전 연습장. 하루 1문제 30~45분 캡, Easy→Medium, "Kotlin 관용구 익히기"가 목적(map/filter/fold/groupBy/windowed/sequences). 추천 리스트: NeetCode 150, Top Interview 150. 70(커리큘럼)/30(LeetCode) 비율 유지.
