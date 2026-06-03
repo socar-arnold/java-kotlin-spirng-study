@@ -73,6 +73,50 @@ fun `병렬은 더 오래 걸리는 작업 하나만큼만`(): Unit = runBlockin
 - 순차: **2013ms** / 병렬: **1011ms** → 거의 정확히 절반.
 - **두 작업이 같은 한 스레드에서 돌면서도 동시 진행**(스레드 추가 X). `delay`가 스레드를 안 막기 때문 — 가벼움의 본질.
 
+## 🔬 심화 — "스레드 점유하지 않고 일시중지"가 실제로 어떻게?
+
+### ① Continuation은 Heap에 산다 (Phase 2-A와 연결)
+일반 함수 호출은 **Stack 프레임**을 쓰는데(스레드 전용), `delay` 같은 일시중지 지점에선:
+1. "여기까지 한 것 + 지역변수"를 통째로 **Continuation 객체로 Heap에 저장**
+2. Stack 프레임 pop → **스레드 즉시 자유**
+3. 시간 되면 (아무) 스레드가 Continuation을 집어 resume → 같은 자리부터 이어 실행
+
+→ Heap은 모든 스레드 공유라, **어느 스레드든 Continuation을 집어 이어 실행 가능**. 그래서 스레드 N개로 코루틴 M개(N << M)를 굴릴 수 있음 — "가벼움"의 본질.
+
+### ② 누가 타이머를 지키고 누가 깨우나 (= Node 비교)
+| 역할 | Node.js | Kotlin coroutines |
+|---|---|---|
+| 타이머 큐 | libuv (Web APIs) | `DefaultExecutor` 스레드(또는 `runBlocking` 자체) |
+| 만료 후 디스패치 | 이벤트 루프 | `Dispatcher`(Default/IO/Main) |
+| 실행 스레드 | 메인 1개 | 디스패처 풀의 N개 |
+
+흐름:
+```
+delay(1000)
+  → ① 타이머 지킴이: "1000ms 뒤 이 Continuation 깨워줘" 등록
+       (시간 지킴이는 우선순위 큐로 만료 시각 보관, 가장 가까운 만료까지 parkNanos로 잠)
+  → (시간 경과)
+  → ② Dispatcher: Continuation을 가용 스레드에 던져 resume() 호출
+```
+
+### ③ `runBlocking`은 두 역할이 한 스레드에 합쳐짐 (우리 실험에서 1011ms 나온 이유)
+호출한 스레드 위에서 자기만의 작은 이벤트 루프를 돔:
+```
+테스트 메인 스레드:
+  async{fetchUser} 시작 → delay(1000) → Continuation을 자기 큐에 등록
+  async{fetchPosts} 시작 → delay(1000) → Continuation을 자기 큐에 등록
+  "재개할 거 없음 → 가장 가까운 만료까지 1000ms parkNanos로 잠"   ← 타이머 지킴이
+  (1000ms 후 깨어남)                                              ← 재개자
+  큐의 두 Continuation 모두 resume → "Arnold" / posts 반환
+```
+→ 새 스레드 0개로, 같은 한 스레드가 잠시 자다 깨서 두 Continuation을 *순차로* resume → **두 delay가 동시에 등록돼 있었기에 한 번 깨면 둘 다 끝.** 그래서 ~1초.
+
+### 핵심 정리
+- **Continuation = Heap 객체** → 어느 스레드든 이어 실행 가능 → "가벼움"의 본질.
+- **타이머 지킴이 + Dispatcher** = Node의 libuv/이벤트 루프 분리판. 다음 세션 Dispatchers 주제 직결.
+
+---
+
 ## ⚠️ JUnit + 코루틴 함정 (오늘 디버깅 교훈)
 ```kotlin
 @Test
