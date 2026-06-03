@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 2 (빌드·JVM·동시성) — Phase 0 + 2 + **3-A/B/C/D 완료**
-- **진행:** 누적 **19세션 완료** (Stage 0: 2 / Stage 1: 12 / Stage 2: 4 / Phase CS: 1)
-- **Stage 2 잔여:** ~8세션 (Phase 3-E 코루틴 + 미션 RSS리더/코루틴레이싱)
-- **다음:** Phase 3-E 코루틴 — TS Promise/async가 매핑되는 자리, Stage 2 진짜 무기
-- **메모:** race condition 5/5 손실 관찰(12047~18775), SafeCounter/AtomicCounter 정확 20000. JMM 가시성·@Volatile, ConcurrentHashMap 등 개념 박힘.
+- **Stage:** 2 (빌드·JVM·동시성) — Phase 0+2+3-A/B/C/D + **3-E ① 완료**
+- **진행:** 누적 **20세션 완료** (Stage 0: 2 / Stage 1: 12 / Stage 2: 5 / Phase CS: 1)
+- **Stage 2 잔여:** ~7세션 (3-E ②: Dispatchers·구조적동시성 심화 + 미션 RSS리더/코루틴레이싱)
+- **다음:** Phase 3-E ② — Dispatchers(Main/IO/Default), 구조적 동시성 심화, 그 다음 미션
+- **메모:** 병렬 async 측정 — 순차 2013ms vs 병렬 1011ms (정확히 절반). delay≠Thread.sleep 차이 체득. JUnit+코루틴은 `: Unit` 명시 필수(함정 해결).
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -38,6 +38,7 @@
 | 2026-05-27 | **🏆 Stage 1 클로징** | 회고 | Phase 1 A~F 개념 + 미션 3개 + CS-3 + 디버깅/도구 교훈. 시니어 사고 5가지(테스트가능한설계/불변/책임분리/표현문제/컴파일타임vs런타임). 종합 노트: learning-notes/2026-05-27-stage1-COMPLETE.md |
 | 2026-05-27 | Stage 2 / Phase 0+2 | Gradle & JVM 내부 | ✅ 완료. Phase 0 Gradle(tasks/dependencies/build, mavenCentral=npm registry, Wrapper). Phase 2 메모리(Stack/Heap/Metaspace)·GC(세대 가설 G1 기본, 실로그 Young 1~2ms vs Full 12.9ms STW)·JIT(워밍업, 티어드 C1/C2)·Reflection(`d::class.memberProperties`, Spring/Jackson/JPA의 마법 비결). 의존성 추가: kotlin-reflect. src/main/kotlin/Reflection.kt |
 | 2026-06-02 | Stage 2 / Phase 3-A/B/C/D | 동시성 기초 | ✅ 완료. 3-A 스레드(thread{}, sleep, join, 비결정 실험), 3-B race condition 직관 실험(Unsafe 5/5 손실 12047~18775, Safe/Atomic 정확 20000), 3-C JMM 가시성(@Volatile·@Synchronized·Atomic 보장 차이), 3-D 동시성 컬렉션(ConcurrentHashMap 등). 핵심: 공유 상태 자체 줄이는 게 정답 → 코루틴 철학. src/main/kotlin/{ThreadDemo,Counter}.kt, src/test/kotlin/CounterTest.kt |
+| 2026-06-03 | Stage 2 / Phase 3-E ① | 코루틴 입문 | ✅ 완료. suspend·delay·runBlocking·async/await. **실측: 순차 2013ms vs 병렬 1011ms (정확히 절반)** — 같은 스레드 위에서 동시 진행(delay가 스레드 안 막음). coroutineScope 안 async = 구조적 동시성 입문. 디버깅 교훈: JUnit+코루틴은 `(): Unit = runBlocking { }` 필수(아니면 No tests found로 조용히 무시). kotlinx-coroutines 의존성 추가. src/main/kotlin/Coroutine.kt, src/test/kotlin/CoroutineTest.kt |
 
 ## 다음 세션 예고
-- Phase 3-E **코루틴**: TS `Promise/async-await`가 매핑되는 자리. `suspend`·`launch`·`async`·`Dispatchers`. 수만 개 동시도 가벼움. Stage 2의 진짜 무기. 이후 미션(RSS리더·코루틴 레이싱) → Stage 2 종료.
+- Phase 3-E ②: **Dispatchers**(Main/IO/Default, withContext), **구조적 동시성 심화**(Job·취소·에러 전파), `launch` vs `async` 사용처. 그 다음 미션 **RSS리더**(I/O 병렬)·**코루틴 레이싱** → Stage 2 종료.
