@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 2 (빌드·JVM·동시성) — Phase 0+2+3-A/B/C/D + **3-E ① 완료**
-- **진행:** 누적 **20세션 완료** (Stage 0: 2 / Stage 1: 12 / Stage 2: 5 / Phase CS: 1)
-- **Stage 2 잔여:** ~7세션 (3-E ②: Dispatchers·구조적동시성 심화 + 미션 RSS리더/코루틴레이싱)
-- **다음:** Phase 3-E ② — Dispatchers(Main/IO/Default), 구조적 동시성 심화, 그 다음 미션
-- **메모:** 병렬 async 측정 — 순차 2013ms vs 병렬 1011ms (정확히 절반). delay≠Thread.sleep 차이 체득. JUnit+코루틴은 `: Unit` 명시 필수(함정 해결).
+- **Stage:** 2 (빌드·JVM·동시성) — Phase 3-E **①+② 완료**, Phase 3 개념 종료
+- **진행:** 누적 **21세션 완료** (Stage 0: 2 / Stage 1: 12 / Stage 2: 6 / Phase CS: 1)
+- **Stage 2 잔여:** **미션 2개만** 남음 (코루틴 레이싱·RSS리더) — 1~2세션
+- **다음:** 미션 — **코루틴 레이싱** 먼저(간단), 그 다음 RSS리더 → Stage 2 졸업
+- **메모:** Dispatchers 측정 Default 519ms vs IO 110ms(~5배 차이). 구조적 동시성 — 한 자식 throw 시 형제 자동 취소(✅), supervisorScope에서는 격리(✅).
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -39,9 +39,12 @@
 | 2026-05-27 | Stage 2 / Phase 0+2 | Gradle & JVM 내부 | ✅ 완료. Phase 0 Gradle(tasks/dependencies/build, mavenCentral=npm registry, Wrapper). Phase 2 메모리(Stack/Heap/Metaspace)·GC(세대 가설 G1 기본, 실로그 Young 1~2ms vs Full 12.9ms STW)·JIT(워밍업, 티어드 C1/C2)·Reflection(`d::class.memberProperties`, Spring/Jackson/JPA의 마법 비결). 의존성 추가: kotlin-reflect. src/main/kotlin/Reflection.kt |
 | 2026-06-02 | Stage 2 / Phase 3-A/B/C/D | 동시성 기초 | ✅ 완료. 3-A 스레드(thread{}, sleep, join, 비결정 실험), 3-B race condition 직관 실험(Unsafe 5/5 손실 12047~18775, Safe/Atomic 정확 20000), 3-C JMM 가시성(@Volatile·@Synchronized·Atomic 보장 차이), 3-D 동시성 컬렉션(ConcurrentHashMap 등). 핵심: 공유 상태 자체 줄이는 게 정답 → 코루틴 철학. src/main/kotlin/{ThreadDemo,Counter}.kt, src/test/kotlin/CounterTest.kt |
 | 2026-06-03 | Stage 2 / Phase 3-E ① | 코루틴 입문 | ✅ 완료. suspend·delay·runBlocking·async/await. **실측: 순차 2013ms vs 병렬 1011ms (정확히 절반)** — 같은 스레드 위에서 동시 진행(delay가 스레드 안 막음). coroutineScope 안 async = 구조적 동시성 입문. 디버깅 교훈: JUnit+코루틴은 `(): Unit = runBlocking { }` 필수(아니면 No tests found로 조용히 무시). kotlinx-coroutines 의존성 추가. src/main/kotlin/Coroutine.kt, src/test/kotlin/CoroutineTest.kt |
+| 2026-06-04 | Stage 2 / Phase 3-E ② | Dispatchers·구조적 동시성 | ✅ 완료(=Phase 3 개념 종료). Dispatchers Default/IO/Main, withContext 패턴, launch vs async. 실측 Default 519ms vs IO 110ms(~5배). 구조적 동시성 두 규칙: 부모가 자식 대기 + 자식 실패 시 형제 자동 취소. 실험: coroutineScope에서 한 자식 throw → 형제 도달 못함(✅), supervisorScope에선 격리(✅). 협력적 취소 개념. TS Promise.all과 차이(실제 취소 vs reject만). src/test/kotlin/{DispatcherTest,StructuredTest}.kt |
 
 ## 다음 세션 예고
-- Phase 3-E ②: **Dispatchers**(Main/IO/Default, withContext), **구조적 동시성 심화**(Job·취소·에러 전파), `launch` vs `async` 사용처. 그 다음 미션 **RSS리더**(I/O 병렬)·**코루틴 레이싱** → Stage 2 종료.
+- 미션 ① **코루틴 레이싱** (간단): 여러 코루틴 race, 가장 빠른 결과 채택(`async`+`select`/`awaitFirst`). 자동차경주 패턴 + 코루틴.
+- 미션 ② **RSS리더** (HTTP·XML 변수): 여러 피드 병렬 fetch + 파싱. `supervisorScope`로 일부 실패 격리. → Stage 2 졸업.
+- 졸업 시: LeetCode 운영 가이드 LEARNING_TRACK에 편입 (TODO 참조).
 
 ## TODO (Stage 2 졸업 시 처리)
 - [ ] LeetCode 운영 가이드를 LEARNING_TRACK.md의 CS 병렬 트랙 섹션에 추가. 핵심: LeetCode = CS-3의 실전 연습장. 하루 1문제 30~45분 캡, Easy→Medium, "Kotlin 관용구 익히기"가 목적(map/filter/fold/groupBy/windowed/sequences). 추천 리스트: NeetCode 150, Top Interview 150. 70(커리큘럼)/30(LeetCode) 비율 유지.
