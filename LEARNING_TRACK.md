@@ -26,17 +26,14 @@
 | Stage | 내용 | 세션(추정) | 비고 |
 |---|---|---|---|
 | 0. Java 온램프 | JVM·문법·OOP 개념 | ✅ 2세션 (완료) | 5/22 |
-| 1. Kotlin 기초 | Phase 1(A~F) + 미션 3개 | ~14세션 (3 완료, ~11 남음) | 개념 빠름, 미션이 다수 |
-| 2. 빌드·JVM·동시성 | Phase 0/2/3 + 미션 | ~12세션 | 동시성/JVM은 새것이라 느림 |
-| 3. 백엔드 | Phase 4 (Spring·JPA·테스트) + 미션 | ~18세션 | Stage 중 최대 |
+| 1. Kotlin 기초 | Phase 1(A~F) + 미션 3개 | ✅ 12세션 (완료) | 5/22~5/27 |
+| 2. 빌드·JVM·동시성 | Phase 0/2/3 + 미션 2개 | ✅ 9세션 (완료) | 5/27~6/05 |
+| 3. 백엔드 | Phase 4 (Spring·JPA·테스트) + 미션 | ~18세션 | **다음**, Stage 중 최대 |
 | 4. 심화 | Phase 5~12 | ~24세션 | |
 | 5. 분산·시스템디자인 | Phase 13 | ~8세션 | |
-| 병렬 | CS (면접·실전 빈출) | 세션당 ~10분 곁들임 | 전 구간 |
+| 병렬 | CS + LeetCode | 세션당 곁들임 | 전 구간 (아래 ↓) |
 
-> **달력 환산(참고):**
-> - 지금처럼 몰아서(하루 2~4세션) → Stage 1 잔여 ~11세션 ≈ **3~5일**.
-> - 지속가능 페이스(주 3~4세션) → Stage 1 잔여 ≈ **3주 안팎**.
-> - 세션 수는 추정치 — 미션 난이도/복습량에 따라 ±. 매 세션 종료 시 PROGRESS에서 갱신.
+> 현재 누적 **23세션 / ~78세션 (≈ 30%)**. 페이스 보정으로 Stage 3는 약간 길어질 수 있음 — Spring 매직과 JPA 함정이 진짜 새로운 영역.
 
 ## Stage 0 주차 스케줄 (Java 온램프)
 | 주차 | 주제 | 목표 | 완료 기준 |
@@ -56,3 +53,37 @@
 콘텐츠는 [CURRICULUM.md](CURRICULUM.md)의 **"Phase CS"** 섹션에 정리됨 (CS-1 네트워크 / CS-2 OS /
 CS-3 자료구조·알고리즘 / CS-4 DB CS). 매 세션 끝에 1꼭지씩, 그 세션 메인 학습과 연관된 것을
 "말로 설명할 수준"으로. 진척은 Phase CS의 체크박스로 표시.
+
+## LeetCode 트랙 — CS-3의 실전 연습장 (Stage 2 졸업과 함께 가동)
+
+> **LeetCode는 별도 트랙이 아니라 [Phase CS-3](CURRICULUM.md)의 *실전 연습장*이에요.**
+> 알고리즘 자체보다 **Kotlin 관용구(stdlib) 익히기**가 목적. CS-3 체크박스 진척과 함께 운영.
+
+### 운영 원칙
+- **하루 1문제, 30~45분 캡.** 막히면 답 보고 다음 날 다시 풀기 (시간 낭비 금지).
+- **Easy → Medium만.** Hard는 면접 임박 시기에. 지금은 *idiom 익히기*가 우선.
+- **70(커리큘럼) / 30(LeetCode) 비율 유지.** Stage 3 Spring/JPA 진도를 LeetCode가 갉아먹지 않게.
+- 무리한 날은 0문제도 OK — Spring 학습이 메인.
+
+### 문제풀이 워크플로 (★ 중요)
+1. **TS 사고로 풀지 말기.** `var counter`+for문 충동 거부 → Kotlin 컬렉션 함수 먼저 떠올리기.
+2. 풀고 나서 **"Top Kotlin Solutions" 탭 열기** → 다른 사람들이 어떤 stdlib을 썼는지 흡수.
+3. 한 번 더 **함수형 체이닝(map/filter/fold/groupBy)으로 다시 풀어보기** — 의도적 반복.
+4. 입력이 크다면 **`asSequence()`** 로 지연 평가 시도(중간 컬렉션 절약).
+
+### 추천 리스트 (큐레이션 > 무작위)
+- **NeetCode 150** — 카테고리별 정리, 학습용 최고
+- **LeetCode "Top Interview 150"** — 면접 빈출
+- 둘 중 하나 정해서 순서대로 — 무작위 풀이는 효율 ↓
+
+### Kotlin에서 자주 빛나는 도구 (이거 손에 익히기 목적)
+- 컬렉션: `map`/`filter`/`fold`/`reduce`/`groupBy`/`partition`/`associateBy`/`zip`/`windowed`/`chunked`
+- 시퀀스: `asSequence()` (대용량·체이닝 최적화)
+- 인덱스: `withIndex()`/`indices`
+- 정렬: `sortedBy`/`sortedByDescending`/`sortedWith(compareBy(...))`
+- 카운트·집계: `count { }`/`sumOf { }`/`maxByOrNull { }`/`minByOrNull { }`
+- 문자열: `groupingBy { }.eachCount()`, `toCharArray().sorted()`
+
+### 어떻게 진척 추적하나
+- 푼 문제는 [Phase CS-3](CURRICULUM.md) 영역에 한 줄로 기록(선택). 또는 별도 `learning-notes/leetcode-NN-제목.md`.
+- 매주 한 번, "이번 주 N문제 / 손에 익힌 stdlib X 함수" 정도 자체 회고.

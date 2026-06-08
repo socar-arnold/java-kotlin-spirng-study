@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 2 — Phase 3 개념 + **미션 ① 코루틴 레이싱 완성** 🏎️
-- **진행:** 누적 **22세션 완료** (Stage 0: 2 / Stage 1: 12 / Stage 2: 7 / Phase CS: 1)
-- **Stage 2 잔여:** **미션 ② RSS리더만** (1~2세션) → Stage 2 졸업 직전!
-- **다음:** 미션 ② RSS리더 (HTTP 병렬 + XML 파싱 + supervisorScope) → Stage 2 졸업
-- **메모:** 코루틴 레이싱 — 300+500+800ms를 직렬이면 1600ms인데 병렬 측정값 **812ms** (가장 느린 차 + 오버헤드). cars.map{async{...}}.awaitAll() 패턴 손에 익음.
+- **Stage:** 🏆 **Stage 2 (빌드·JVM·동시성) 완주!** ⚡🧵
+- **진행:** 누적 **23세션 완료** (Stage 0: 2 / Stage 1: 12 / Stage 2: 9). 전체 ~78의 ~30%.
+- **다음:** **Stage 3 (백엔드 — Spring·JPA·테스트)** 진입 ~18세션 예상. Stage 중 최대, 진짜 산.
+- **LeetCode 트랙 정식 가동** ✅ (LEARNING_TRACK 편입 완료, 졸업 트리거 약속 이행)
+- **메모:** RSS리더 — 직렬 900ms→병렬 315ms, supervisorScope+`try/catch on await` 패턴 손에 익음. DI(FeedClient 인터페이스) = Spring DI 전조.
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -41,10 +41,9 @@
 | 2026-06-03 | Stage 2 / Phase 3-E ① | 코루틴 입문 | ✅ 완료. suspend·delay·runBlocking·async/await. **실측: 순차 2013ms vs 병렬 1011ms (정확히 절반)** — 같은 스레드 위에서 동시 진행(delay가 스레드 안 막음). coroutineScope 안 async = 구조적 동시성 입문. 디버깅 교훈: JUnit+코루틴은 `(): Unit = runBlocking { }` 필수(아니면 No tests found로 조용히 무시). kotlinx-coroutines 의존성 추가. src/main/kotlin/Coroutine.kt, src/test/kotlin/CoroutineTest.kt |
 | 2026-06-04 | Stage 2 / Phase 3-E ② | Dispatchers·구조적 동시성 | ✅ 완료(=Phase 3 개념 종료). Dispatchers Default/IO/Main, withContext 패턴, launch vs async. 실측 Default 519ms vs IO 110ms(~5배). 구조적 동시성 두 규칙: 부모가 자식 대기 + 자식 실패 시 형제 자동 취소. 실험: coroutineScope에서 한 자식 throw → 형제 도달 못함(✅), supervisorScope에선 격리(✅). 협력적 취소 개념. TS Promise.all과 차이(실제 취소 vs reject만). src/test/kotlin/{DispatcherTest,StructuredTest}.kt |
 | 2026-06-04 | Stage 2 / 미션 ① | 코루틴 레이싱 🏎️ | ✅ **완성**. RaceCar/RaceResult/race(코루틴 응용). 3개 테스트 PASSED — 우승자, 완주 순서, **병렬 증명(직렬 1600ms→측정 812ms)**. cars.map{async{delay; car}}.awaitAll().sortedBy.map{name} 패턴. 디버깅 교훈: TS 습관 3개(객체 리터럴·람다 안 return·체이닝 후 .name 중복) 교정. src/main/kotlin/CoroutineRacing.kt, src/test/kotlin/CoroutineRacingTest.kt |
+| 2026-06-05 | Stage 2 / 미션 ② | RSS리더 📰 | ✅ **완성·3 tests PASSED**. FeedClient 인터페이스(DI)+parseFeed(regex)+RssReader(supervisorScope+try/catch on await). 직렬 900ms→병렬 315ms. 한 피드 실패해도 형제 살아남는 격리 패턴 정착. 디버깅: settings.gradle.kts에 잘못된 `include(...)` 자동 삽입 → 제거. src/main/kotlin/RssReader.kt, src/test/kotlin/RssReaderTest.kt |
+| 2026-06-05 | **🏆 Stage 2 클로징** | 회고 | Phase 0/2/3-A~E + 미션 2개. 시니어 사고 6가지(컴파일타임vs런타임/공유상태/변하는것밖으로/구조적동시성/Continuation=Heap/DI입문). LeetCode 트랙 LEARNING_TRACK 정식 편입 완료. 종합 노트: learning-notes/2026-06-05-stage2-COMPLETE.md |
 
 ## 다음 세션 예고
-- 미션 ② **RSS리더** (HTTP·XML 변수): 여러 피드 병렬 fetch + 파싱. `supervisorScope`로 일부 실패 격리. → **Stage 2 졸업**.
-- 졸업 직후: **LeetCode 운영 가이드를 LEARNING_TRACK에 정식 편입** (TODO 참조).
-
-## TODO (Stage 2 졸업 시 처리)
-- [ ] LeetCode 운영 가이드를 LEARNING_TRACK.md의 CS 병렬 트랙 섹션에 추가. 핵심: LeetCode = CS-3의 실전 연습장. 하루 1문제 30~45분 캡, Easy→Medium, "Kotlin 관용구 익히기"가 목적(map/filter/fold/groupBy/windowed/sequences). 추천 리스트: NeetCode 150, Top Interview 150. 70(커리큘럼)/30(LeetCode) 비율 유지.
+- **Stage 3 (백엔드) 진입**: Phase 4-A HTTP/REST 기초 (CS-1 페어링 적기) → 4-B Spring Boot 기초(우리 RSS의 FeedClient를 Spring DI로 다시 만나기) → 4-C Spring Data JPA. Stage 3 마치면 "Kotlin으로 진짜 서버 만들 줄 안다".
+- 병행 **LeetCode 트랙 가동** — 하루 1문제 30~45분 캡, Kotlin 관용구 익히기 목적. 70(커리큘럼)/30(LeetCode).
