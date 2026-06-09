@@ -43,6 +43,7 @@
 | 2026-06-04 | Stage 2 / 미션 ① | 코루틴 레이싱 🏎️ | ✅ **완성**. RaceCar/RaceResult/race(코루틴 응용). 3개 테스트 PASSED — 우승자, 완주 순서, **병렬 증명(직렬 1600ms→측정 812ms)**. cars.map{async{delay; car}}.awaitAll().sortedBy.map{name} 패턴. 디버깅 교훈: TS 습관 3개(객체 리터럴·람다 안 return·체이닝 후 .name 중복) 교정. src/main/kotlin/CoroutineRacing.kt, src/test/kotlin/CoroutineRacingTest.kt |
 | 2026-06-05 | Stage 2 / 미션 ② | RSS리더 📰 | ✅ **완성·3 tests PASSED**. FeedClient 인터페이스(DI)+parseFeed(regex)+RssReader(supervisorScope+try/catch on await). 직렬 900ms→병렬 315ms. 한 피드 실패해도 형제 살아남는 격리 패턴 정착. 디버깅: settings.gradle.kts에 잘못된 `include(...)` 자동 삽입 → 제거. src/main/kotlin/RssReader.kt, src/test/kotlin/RssReaderTest.kt |
 | 2026-06-05 | **🏆 Stage 2 클로징** | 회고 | Phase 0/2/3-A~E + 미션 2개. 시니어 사고 6가지(컴파일타임vs런타임/공유상태/변하는것밖으로/구조적동시성/Continuation=Heap/DI입문). LeetCode 트랙 LEARNING_TRACK 정식 편입 완료. 종합 노트: learning-notes/2026-06-05-stage2-COMPLETE.md |
+| 2026-06-09 | Stage 2 / Phase 3-E ③ | 가상 스레드 vs 코루틴 (JDK 21 Loom) | 📝 심화 노트. 계기: 실무 레포 `test-drive-portal-api` JDK 20→21 업그레이드. 핵심: 가상 스레드 = "블로킹 코드 그대로 + 스레드만 가볍게"(suspend 전염 X). Continuation→스레드 양보를 JVM 레벨로 내린 것(↔Phase 3-E ① 연결). 신규 레포가 코루틴 대신 JDK 21 택하는 이유 = JPA/MVC 자산 안 버려도 됨. **트레이드오프: DB 커넥션 풀 병목이면 켜도 효과 없음 → 부하테스트 검증 필수. synchronized pinning, ThreadLocal 주의.** 둘은 대체재 아님(가상스레드=처리량, 코루틴=구조적 동시성/취소/Flow). 노트: learning-notes/2026-06-09-stage2-phase3-virtual-threads-vs-coroutines.md |
 
 ## 다음 세션 예고
 - **Stage 3 (백엔드) 진입**: Phase 4-A HTTP/REST 기초 (CS-1 페어링 적기) → 4-B Spring Boot 기초(우리 RSS의 FeedClient를 Spring DI로 다시 만나기) → 4-C Spring Data JPA. Stage 3 마치면 "Kotlin으로 진짜 서버 만들 줄 안다".
