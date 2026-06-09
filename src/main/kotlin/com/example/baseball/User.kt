@@ -8,6 +8,6 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)   // PK 자동 증가 (DB AUTO_INCREMENT)
     val id: Long = 0,
-    val name: String,
-    val email: String,
+    var name: String,
+    var email: String,
 )

@@ -6,28 +6,30 @@ import org.springframework.web.bind.annotation.*
 import java.net.URI
 
 data class CreateUserRequest(val name: String, val email: String)
-
+data class UpdateNameRequest(val name: String)
 @RestController
 @RequestMapping("/users")
-class UserController (private val repo: UserRepository) {
+class UserController (private val service: UserService) {
 
     @PostMapping
     fun create(@RequestBody req: CreateUserRequest): ResponseEntity<User> {
-        val saved = repo.save(User(name=req.name, email = req.email))
+        val saved = service.create(req.name, req.email)
 
         return ResponseEntity.created(URI.create("/users/${saved.id}")).body(saved)
     }
 
     @GetMapping("/{id}")
-    fun getOne(@PathVariable id: Long): ResponseEntity<User> {
-        val user = repo.findById(id).orElse(null)
-        return if (user == null) ResponseEntity.notFound().build() // 404
-        else ResponseEntity.ok(user) // 200
-    }
+    fun getOne(@PathVariable id: Long):User = service.findById(id)
 
     @GetMapping
-    fun getAll():List<User> = repo.findAll()
+    fun getAll():List<User> = service.findAll()
 
-    @GetMapping("/by-email")
-    fun byEmail(@RequestParam email: String): User? = repo.findByEmail(email)
+    @PatchMapping("/{id}")  // ⭐ Phase 4-A 배운 PATCH (부분 수정)
+    fun updateName(@PathVariable id: Long, @RequestBody req: UpdateNameRequest): User  = service.updateName(id, req.name)
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+        service.delete(id)
+        return ResponseEntity.noContent().build()
+    }
 }

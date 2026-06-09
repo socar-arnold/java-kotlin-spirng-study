@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 3 (백엔드) — **Phase 4-A/B + 4-C 절반 완료** 🍃🗄️
-- **진행:** 누적 **26세션** (Stage 0:2 / Stage 1:12 / Stage 2:9 / Stage 3:3). 전체 ~78의 ~33%.
-- **Stage 3 잔여:** ~15세션 (4-C 후반 + 4-D~I + 미션 블랙잭/로또)
-- **다음:** Phase 4-C 후반 — 영속성 컨텍스트·dirty checking·@Transactional·Service 계층 분리
-- **메모:** Spring DI 손으로 체험(GreetingService·VisitCounter·UserController). JPA CRUD 동작 + SQL 로그까지 시각화(insert/findByEmail 자동 SQL 확인). 함정 통과: default package, H2 USER 예약어. 깊이: Reflection·CAS·Spring 내부 흐름.
+- **Stage:** 3 (백엔드) — **Phase 4-A/B/C 완전 졸업** 🍃🗄️🪄
+- **진행:** 누적 **27세션** (Stage 0:2 / Stage 1:12 / Stage 2:9 / Stage 3:4). 전체 ~78의 ~35%.
+- **Stage 3 잔여:** ~14세션 (4-D~I + 미션 블랙잭/로또)
+- **다음:** Phase 4-D 예외처리·Validation (@Valid + 전역 ExceptionHandler 본격)
+- **메모:** Dirty Checking 손으로 확인 — `user.name=newName` 한 줄로 자동 UPDATE 발행(SQL 로그 증거). UserService(@Transactional) + UserController(PATCH) + GlobalExceptionHandler(404) 정착. 3계층 구조(Controller→Service→Repository) + OSIV 경고 인지(Phase 4-G에서 끄기).
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -47,8 +47,9 @@
 | 2026-06-09 | Stage 3 / Phase 4-A | REST·HTTP | ✅ 완료. 메서드·상태코드·멱등성·**PUT vs PATCH 교정**, 응답 패턴(201+Location, 409+구조화 ErrorResponse). CS-1 TCP 곁들임(HTTP 위 신뢰성). |
 | 2026-06-09 | Stage 3 / Phase 4-B | Spring Boot 기초 | ✅ 완료. 의존성/플러그인 추가, HelloApplication, HelloController. **함정 ①: default package** → `com.example.baseball`로 전체 이동. Service 추출(GreetingService) + 싱글톤 빈 + AtomicInteger(VisitCounter/StatsController). 깊이: **Reflection·CAS·Spring DI 내부 흐름** 정리(누가 ctor 호출하나=Spring). |
 | 2026-06-09 | Stage 3 / Phase 4-C ① | JPA CRUD 동작 | ✅ 절반(CRUD 동작). User Entity + JpaRepository + UserController, H2 인메모리, application.yml. **함정 ②: `user`는 H2 예약어 → `@Table(name="users")`**. SQL 로그(show-sql + jdbc.bind TRACE)로 INSERT/findByEmail 자동 생성 확인. 깊이: JpaRepository 두 마법(상속 CRUD + 메서드 이름 파싱 → 동적 프록시). |
+| 2026-06-09 | Stage 3 / Phase 4-C ② | 영속성 컨텍스트·Dirty Checking | ✅ **완료(=Phase 4-C 졸업)**. UserService(@Transactional) 추출, User 필드 var화, UserController PATCH 엔드포인트, GlobalExceptionHandler(404). **하이라이트: PATCH 시 SQL 로그에 `update users set ...` 자동 발행 확인 — `repo.save()` 안 불렀는데도** = Dirty Checking 직접 증명. 3계층 구조 정착. OSIV 경고 인지(Phase 4-G 처리). 미세관찰: UPDATE가 전 컬럼(@DynamicUpdate는 4-G). |
 
 ## 다음 세션 예고
-- **Phase 4-C 후반**: 영속성 컨텍스트 + **변경 감지(Dirty Checking)** — `user.name = "new"`만 해도 자동 UPDATE. `@Transactional` Service 계층 표준. Controller→Service→Repository 3계층 정착.
-- 이후 4-D 예외처리·Validation → 4-E AOP → 4-F Security → 4-G JPA 심화 → 4-H 테스트 → 4-I 설정·Flyway → 미션(블랙잭·로또) → Stage 3 졸업.
+- **Phase 4-D**: 예외처리·Validation. `@Valid` + Jakarta Bean Validation, 전역 ErrorResponse 표준화, 4-C에서 미리 본 `@RestControllerAdvice` 본격.
+- 이후 4-E AOP → 4-F Security/JWT → 4-G JPA 심화(연관관계·N+1·OSIV 끄기) → 4-H 테스트 → 4-I 설정·Flyway → 미션(블랙잭·로또) → Stage 3 졸업.
 - 병행 LeetCode (하루 1문제 캡, Kotlin 관용구).
