@@ -53,3 +53,12 @@
 - **Phase 4-D**: 예외처리·Validation. `@Valid` + Jakarta Bean Validation, 전역 ErrorResponse 표준화, 4-C에서 미리 본 `@RestControllerAdvice` 본격.
 - 이후 4-E AOP → 4-F Security/JWT → 4-G JPA 심화(연관관계·N+1·OSIV 끄기) → 4-H 테스트 → 4-I 설정·Flyway → 미션(블랙잭·로또) → Stage 3 졸업.
 - 병행 LeetCode (하루 1문제 캡, Kotlin 관용구).
+
+## TODO (Phase 4 졸업 시 처리)
+- [ ] **Phase 1~4 통합 복습 세션** — Stage 3 졸업 직후 단독 세션으로 실시. 구성안:
+  1. **Phase별 핵심 개념 인덱스** — 각 Phase의 "한 줄 요약" 압축본 + 잊으면 안 되는 함정 목록
+  2. **시니어 사고 패턴 누적 정리** — 컴파일타임vs런타임 / 공유상태 / 변하는것 밖으로 / 책임분리(검증vs판정) / 구조적동시성 / Continuation=Heap / DI 입문 / Dirty Checking 등을 한 표로
+  3. **TS↔Kotlin 매핑 표 종합** — 변수/타입/널/제네릭/async/DI/ORM 다 한 곳에
+  4. **미니 퀴즈 10문항** — 면접 시뮬레이션 식으로 (멱등성, sealed exhaustiveness, AtomicInteger 왜, Dirty Checking, 등)
+  5. **코드 자산 인덱스** — src/main/kotlin/ 안에 만든 거 한눈에 정리 (Intro/Shape/Polymorphism/Baseball/CarRacing/Coroutine/RssReader/User+Service+Controller 등)
+  6. **Stage 4 진입 준비도 체크** — 빠진 개념 자가 진단
