@@ -26,6 +26,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    implementation("org.springframework.boot:spring-boot-starter-validation")  // ⭐ 추가
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")   // ⭐ JPA
     runtimeOnly("com.h2database:h2")                                          // ⭐ 인메모리 DB
 }

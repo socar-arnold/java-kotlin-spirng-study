@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 3 (백엔드) — **Phase 4-A/B/C 완전 졸업** 🍃🗄️🪄
-- **진행:** 누적 **27세션** (Stage 0:2 / Stage 1:12 / Stage 2:9 / Stage 3:4). 전체 ~78의 ~35%.
-- **Stage 3 잔여:** ~14세션 (4-D~I + 미션 블랙잭/로또)
-- **다음:** Phase 4-D 예외처리·Validation (@Valid + 전역 ExceptionHandler 본격)
-- **메모:** Dirty Checking 손으로 확인 — `user.name=newName` 한 줄로 자동 UPDATE 발행(SQL 로그 증거). UserService(@Transactional) + UserController(PATCH) + GlobalExceptionHandler(404) 정착. 3계층 구조(Controller→Service→Repository) + OSIV 경고 인지(Phase 4-G에서 끄기).
+- **Stage:** 3 (백엔드) — **Phase 4-D 졸업** (A/B/C/D 완료) 🛡️
+- **진행:** 누적 **28세션** (Stage 0:2 / Stage 1:12 / Stage 2:9 / Stage 3:5). 전체 ~78의 ~36%.
+- **Stage 3 잔여:** ~13세션 (4-E~I + 미션 블랙잭/로또)
+- **다음:** Phase 4-E AOP (`@Aspect`, `@Around` — `@Transactional`이 사실 이거였음)
+- **메모:** Bean Validation + 전역 ExceptionHandler 정착. 함정 통과: 이름 충돌(우리 FieldError vs Spring) → ValidationError로 개명. 첫 미니 퀴즈 ✅ — NotEmpty 함정·여러 어노테이션 다 검증 패턴 새로 인지. AOP 키워드(횡단 관심사) 예고 완료.
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -48,6 +48,7 @@
 | 2026-06-09 | Stage 3 / Phase 4-B | Spring Boot 기초 | ✅ 완료. 의존성/플러그인 추가, HelloApplication, HelloController. **함정 ①: default package** → `com.example.baseball`로 전체 이동. Service 추출(GreetingService) + 싱글톤 빈 + AtomicInteger(VisitCounter/StatsController). 깊이: **Reflection·CAS·Spring DI 내부 흐름** 정리(누가 ctor 호출하나=Spring). |
 | 2026-06-09 | Stage 3 / Phase 4-C ① | JPA CRUD 동작 | ✅ 절반(CRUD 동작). User Entity + JpaRepository + UserController, H2 인메모리, application.yml. **함정 ②: `user`는 H2 예약어 → `@Table(name="users")`**. SQL 로그(show-sql + jdbc.bind TRACE)로 INSERT/findByEmail 자동 생성 확인. 깊이: JpaRepository 두 마법(상속 CRUD + 메서드 이름 파싱 → 동적 프록시). |
 | 2026-06-09 | Stage 3 / Phase 4-C ② | 영속성 컨텍스트·Dirty Checking | ✅ **완료(=Phase 4-C 졸업)**. UserService(@Transactional) 추출, User 필드 var화, UserController PATCH 엔드포인트, GlobalExceptionHandler(404). **하이라이트: PATCH 시 SQL 로그에 `update users set ...` 자동 발행 확인 — `repo.save()` 안 불렀는데도** = Dirty Checking 직접 증명. 3계층 구조 정착. OSIV 경고 인지(Phase 4-G 처리). 미세관찰: UPDATE가 전 컬럼(@DynamicUpdate는 4-G). |
+| 2026-06-10 | Stage 3 / Phase 4-D | Validation & Exception | ✅ **완료**. Bean Validation(@NotBlank/@Email/@Size/@Pattern), @Valid 트리거, 전역 ExceptionHandler 확장(400 + ErrorResponse 표준 모양). 함정: Kotlin `@field:` 타깃, 우리 FieldError ↔ Spring FieldError 이름 충돌 → ValidationError로 개명. **🎯 첫 미니 퀴즈** 운영(NotEmpty 함정·여러 어노테이션 다 검증·AOP 예고 새로 인지). 학습 노트에 퀴즈 보존. |
 
 ## 다음 세션 예고
 - **Phase 4-D**: 예외처리·Validation. `@Valid` + Jakarta Bean Validation, 전역 ErrorResponse 표준화, 4-C에서 미리 본 `@RestControllerAdvice` 본격.
