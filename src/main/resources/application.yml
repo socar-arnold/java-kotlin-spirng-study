@@ -17,3 +17,6 @@ logging:                              # ← 추가
   level:
     org.hibernate.SQL: DEBUG          # SQL 본문 (이게 show-sql과 같은 효과)
     org.hibernate.orm.jdbc.bind: TRACE   # ⭐ 파라미터 값(?에 들어간 실제 값)까지
+
+jwt:
+  secret: "dev-secret-this-must-be-at-least-256-bits-32chars"

@@ -9,11 +9,11 @@
 - **주당 학습 시간:** 가볍게 (주 7~8시간)
 
 ## 현재 위치
-- **Stage:** 3 (백엔드) — **Phase 4-E 졸업** (A/B/C/D/E 완료) 🎭
-- **진행:** 누적 **29세션** (Stage 0:2 / Stage 1:12 / Stage 2:9 / Stage 3:6). 전체 ~78의 ~37%.
-- **Stage 3 잔여:** ~12세션 (4-F~I + 미션 블랙잭/로또)
-- **다음:** Phase 4-F Spring Security + JWT (Filter Chain으로 토큰 인증)
-- **메모:** LoggingAspect 실측 — 컨트롤러 코드 안 건드리고 모든 호출에 자동 로그·시간. APM의 근본 원리 손으로 짠 셈. 미니 퀴즈 ②: **Self-invocation 함정 새로 인지** (Spring AOP 프록시 우회 = @Transactional 안 먹힘). Filter/Interceptor/AOP 비교 정리.
+- **Stage:** 3 (백엔드) — **Phase 4-F ① 완료** (A/B/C/D/E/F① 완료) 🔐
+- **진행:** 누적 **30세션** (Stage 0:2 / Stage 1:12 / Stage 2:9 / Stage 3:7). 전체 ~78의 ~38%.
+- **Stage 3 잔여:** ~11세션 (4-F② BCrypt+권한 + 4-G~I + 미션 블랙잭/로또)
+- **다음:** Phase 4-F ② BCrypt 비밀번호 해싱 + `@PreAuthorize` 권한
+- **메모:** JWT 인증 흐름 손에 들어옴 — 회원가입(공개)→로그인→토큰 발급→토큰 헤더로 보호 자원 접근. 미니 퀴즈 ③: JWT=서명(JWS)이지 암호화 아님(payload 누구나 읽음), 401 vs 403, BCrypt=느려서 안전. 함정 통과: 닭과 달걀(HTTP 메서드별 정책), Spring Security 6 기본 403.
 - **실측 페이스:** 5/22 4세션 + 5/25 2세션 + 5/26 2세션 → 개념은 계획比 ~3배, 미션이 시간 변수
 
 ## 완료 로그
@@ -51,6 +51,7 @@
 | 2026-06-10 | Stage 3 / Phase 4-D | Validation & Exception | ✅ **완료**. Bean Validation(@NotBlank/@Email/@Size/@Pattern), @Valid 트리거, 전역 ExceptionHandler 확장(400 + ErrorResponse 표준 모양). 함정: Kotlin `@field:` 타깃, 우리 FieldError ↔ Spring FieldError 이름 충돌 → ValidationError로 개명. **🎯 첫 미니 퀴즈** 운영(NotEmpty 함정·여러 어노테이션 다 검증·AOP 예고 새로 인지). 학습 노트에 퀴즈 보존. |
 | 2026-06-11 | Stage 3 / Phase 4-E | AOP + Filter/Interceptor | ✅ **완료**. spring-boot-starter-aop 추가, LoggingAspect(@Around로 모든 컨트롤러 자동 로그·시간 측정). JoinPoint API(signature/args/proceed/target vs this). Filter/Interceptor/AOP 비교. **🎯 두 번째 미니 퀴즈**: Self-invocation 함정 새로 인지(프록시 우회로 @Transactional 안 먹힘 → 시니어 면접 단골), JWT는 Filter 정답. APM 도구들의 근본 원리를 손으로 짠 셈. |
 | 2026-06-11 | Stage 3 / Phase 4-E 보강 | AOP·Proxy Deep Dive | 📝 **면접 자산 노트** 작성. self-invocation/프록시 본질을 끝까지 캠 — A/B 두 객체, this의 정체, "왜 프록시?"(편의 vs 성능 오해 교정), 세 대안 비교(수동/AspectJ/Spring AOP), CGLIB vs JDK, NestJS 등 보편 패턴, 면접 Q&A 시뮬 5문항. learning-notes/2026-06-11-stage3-aop-proxy-deepdive.md |
+| 2026-06-11 | Stage 3 / Phase 4-F ① | Spring Security + JWT | ✅ **완료**. spring-boot-starter-security + JJWT 의존성. JwtUtil(HS256), JwtAuthFilter(OncePerRequestFilter), SecurityConfig(STATELESS+CSRF disable+HTTP 메서드별 정책), AuthController(/auth/login). 실측: 회원가입→로그인→토큰 발급→토큰 헤더로 200, 토큰 없이 403. **🎯 미니 퀴즈 ③**: JWT 구조, JWS vs JWE(서명 X 암호화), 변조 검증, 401 vs 403(Security 6 기본 403), BCrypt 이유(느림+솔트+비용=공격자 비용 폭증). 함정 통과: 닭과 달걀(HTTP 메서드별 permitAll), bootRun 재시작 필수. |
 
 ## 다음 세션 예고
 - **Phase 4-D**: 예외처리·Validation. `@Valid` + Jakarta Bean Validation, 전역 ErrorResponse 표준화, 4-C에서 미리 본 `@RestControllerAdvice` 본격.
