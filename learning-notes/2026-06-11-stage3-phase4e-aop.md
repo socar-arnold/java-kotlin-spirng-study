@@ -1,5 +1,9 @@
 # Stage 3 · Phase 4-E — AOP (+Filter/Interceptor 비교) 🎭
 
+> 🔗 **연결 자산:** [2026-06-11-stage3-aop-proxy-deepdive.md](2026-06-11-stage3-aop-proxy-deepdive.md)
+>    — self-invocation·프록시 본질을 끝까지 깐 deep dive. 면접 직전 *그 한 장*만 봐도 됨.
+
+
 > 날짜: 2026-06-11
 > 의미: 횡단 관심사 자동 주입. `@Transactional`의 비밀 풀림.
 > 페르소나: TypeScript 개발자 (NestJS Interceptor 사고 활용)

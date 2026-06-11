@@ -50,6 +50,7 @@
 | 2026-06-09 | Stage 3 / Phase 4-C ② | 영속성 컨텍스트·Dirty Checking | ✅ **완료(=Phase 4-C 졸업)**. UserService(@Transactional) 추출, User 필드 var화, UserController PATCH 엔드포인트, GlobalExceptionHandler(404). **하이라이트: PATCH 시 SQL 로그에 `update users set ...` 자동 발행 확인 — `repo.save()` 안 불렀는데도** = Dirty Checking 직접 증명. 3계층 구조 정착. OSIV 경고 인지(Phase 4-G 처리). 미세관찰: UPDATE가 전 컬럼(@DynamicUpdate는 4-G). |
 | 2026-06-10 | Stage 3 / Phase 4-D | Validation & Exception | ✅ **완료**. Bean Validation(@NotBlank/@Email/@Size/@Pattern), @Valid 트리거, 전역 ExceptionHandler 확장(400 + ErrorResponse 표준 모양). 함정: Kotlin `@field:` 타깃, 우리 FieldError ↔ Spring FieldError 이름 충돌 → ValidationError로 개명. **🎯 첫 미니 퀴즈** 운영(NotEmpty 함정·여러 어노테이션 다 검증·AOP 예고 새로 인지). 학습 노트에 퀴즈 보존. |
 | 2026-06-11 | Stage 3 / Phase 4-E | AOP + Filter/Interceptor | ✅ **완료**. spring-boot-starter-aop 추가, LoggingAspect(@Around로 모든 컨트롤러 자동 로그·시간 측정). JoinPoint API(signature/args/proceed/target vs this). Filter/Interceptor/AOP 비교. **🎯 두 번째 미니 퀴즈**: Self-invocation 함정 새로 인지(프록시 우회로 @Transactional 안 먹힘 → 시니어 면접 단골), JWT는 Filter 정답. APM 도구들의 근본 원리를 손으로 짠 셈. |
+| 2026-06-11 | Stage 3 / Phase 4-E 보강 | AOP·Proxy Deep Dive | 📝 **면접 자산 노트** 작성. self-invocation/프록시 본질을 끝까지 캠 — A/B 두 객체, this의 정체, "왜 프록시?"(편의 vs 성능 오해 교정), 세 대안 비교(수동/AspectJ/Spring AOP), CGLIB vs JDK, NestJS 등 보편 패턴, 면접 Q&A 시뮬 5문항. learning-notes/2026-06-11-stage3-aop-proxy-deepdive.md |
 
 ## 다음 세션 예고
 - **Phase 4-D**: 예외처리·Validation. `@Valid` + Jakarta Bean Validation, 전역 ErrorResponse 표준화, 4-C에서 미리 본 `@RestControllerAdvice` 본격.
