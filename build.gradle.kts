@@ -28,6 +28,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-validation")  // ⭐ 추가
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")   // ⭐ JPA
+    implementation("org.springframework.boot:spring-boot-starter-aop")
     runtimeOnly("com.h2database:h2")                                          // ⭐ 인메모리 DB
 }
 
